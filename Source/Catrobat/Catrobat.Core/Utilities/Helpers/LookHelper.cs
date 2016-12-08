@@ -20,12 +20,10 @@ namespace Catrobat.IDE.Core.Utilities.Helpers
             }
 
             var resizedImage = await ServiceLocator.ImageResizeService.ResizeImage(image, dimension.Width, dimension.Height);
-            var look = new Look(name);
+            var look = new Look(name, image.FileName);
             var absoluteFileName = Path.Combine(projectPath, StorageConstants.ProgramLooksPath, look.FileName);
 
             await resizedImage.WriteAsPng(absoluteFileName);
-
-            //look.Image = resizedImage;
 
             return look;
         }

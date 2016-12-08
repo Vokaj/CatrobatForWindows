@@ -17,7 +17,15 @@ namespace Catrobat.IDE.Core.UI.PortableUI
         private int _height;
         private object _nativeImageSource;
         private Stream _encodedData;
-        private bool _isEmpty= false;
+        private bool _isEmpty = false;
+        private string _fileName;
+
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
+
 
         public Stream EncodedData
         {

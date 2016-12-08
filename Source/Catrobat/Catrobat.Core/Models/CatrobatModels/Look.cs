@@ -92,10 +92,10 @@ namespace Catrobat.IDE.Core.Models
             
         }
 
-        public Look(string name)
+        public Look(string name, string fileName)
         {
             _name = name;
-            _fileName = FileNameGenerationHelper.Generate() + _name;
+            _fileName = FileNameGenerationHelper.Generate() + "_" + fileName + ".png";
         }
 
         public async Task Delete(Program project)
@@ -136,7 +136,7 @@ namespace Catrobat.IDE.Core.Models
 
         async Task<object> IAsyncCloneable<Program>.CloneInstance(Program program)
         {
-            var result = new Look(Name);
+            var result = new Look(Name, _fileName);
             var directory = program.BasePath + "/" + StorageConstants.ProgramLooksPath + "/";
             using (var storage = StorageSystem.GetStorage())
             {

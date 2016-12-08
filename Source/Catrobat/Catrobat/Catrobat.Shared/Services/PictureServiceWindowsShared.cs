@@ -202,7 +202,8 @@ namespace Catrobat.IDE.WindowsShared.Services
             {
                 Width = writeableBitmap.PixelWidth,
                 Height = writeableBitmap.PixelHeight,
-                EncodedData = memoryStream
+                EncodedData = memoryStream,
+                FileName = file.DisplayName
             };
 
             if (_lookToEdit == null)
