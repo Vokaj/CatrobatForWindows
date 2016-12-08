@@ -32,6 +32,7 @@
         ClearPageCache,
         ExportStreamChanged,
         ToastNotificationActivated,
-        ShowDetailedOnlineProgram
+        ShowDetailedOnlineProgram,
+        SoundFileNameListener
     }
 }

@@ -18,6 +18,7 @@ namespace Catrobat.IDE.Core.ViewModels.Editor.Sounds
         private Program _currentProgram;
         private Sprite _receivedSelectedSprite;
         private Stream _soundStream;
+        private string _soundFileName;
 
         #endregion
 
@@ -59,6 +60,12 @@ namespace Catrobat.IDE.Core.ViewModels.Editor.Sounds
             }
         }
 
+        public string SoundFileName
+        {
+            get { return _soundFileName;  }
+            set { _soundFileName = value;  }
+        }
+
         #endregion
 
         #region Commands
@@ -89,8 +96,8 @@ namespace Catrobat.IDE.Core.ViewModels.Editor.Sounds
                 nameList.Add(soundItem.Name);
             }
             SoundName = await ServiceLocator.ContextService.FindUniqueName(validName, nameList);
-            var sound = new Sound(SoundName);
-            var path = Path.Combine(CurrentProgram.BasePath, StorageConstants.ProgramSoundsPath, SoundName);
+            var sound = new Sound(SoundName, SoundFileName);
+            var path = Path.Combine(CurrentProgram.BasePath, StorageConstants.ProgramSoundsPath, sound.FileName);
 
             using (var storage = StorageSystem.GetStorage())
             {
@@ -140,6 +147,11 @@ namespace Catrobat.IDE.Core.ViewModels.Editor.Sounds
             SoundStream = message.Content;
         }
 
+        private void SoundFileNameChangedMessageAction(GenericMessage<string> message)
+        {
+            SoundFileName = message.Content;
+        }
+
         #endregion
 
         public SoundNameChooserViewModel()
@@ -158,7 +170,10 @@ namespace Catrobat.IDE.Core.ViewModels.Editor.Sounds
             Messenger.Default.Register<GenericMessage<Stream>>(this,
                  ViewModelMessagingToken.SoundStreamListener, 
                  SoundStreamChangedMessageAction);
-            
+
+            Messenger.Default.Register<GenericMessage<string>>(this,
+                 ViewModelMessagingToken.SoundFileNameListener,
+                 SoundFileNameChangedMessageAction);
         }
 
         public override void NavigateTo()

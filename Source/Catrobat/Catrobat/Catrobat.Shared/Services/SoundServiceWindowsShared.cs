@@ -60,6 +60,9 @@ namespace Catrobat.IDE.WindowsShared.Services
             var message = new GenericMessage<Stream>(memoryStream);
             Messenger.Default.Send(message, ViewModelMessagingToken.SoundStreamListener);
 
+            var nameMessage = new GenericMessage<string>(file.Name);
+            Messenger.Default.Send(nameMessage,ViewModelMessagingToken.SoundFileNameListener);
+
             ServiceLocator.DispatcherService.RunOnMainThread(() =>
                     ServiceLocator.NavigationService.NavigateTo<SoundNameChooserViewModel>());
         }

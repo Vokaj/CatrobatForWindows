@@ -47,10 +47,10 @@ namespace Catrobat.IDE.Core.Models
             
         }
 
-        public Sound(string name)
+        public Sound(string name, string fileName)
         {
             _name = name;
-            _fileName = FileNameGenerationHelper.Generate() + _name;
+            _fileName = FileNameGenerationHelper.Generate() + "_" + fileName;
         }
 
         public async Task Delete(Program project)
@@ -82,7 +82,7 @@ namespace Catrobat.IDE.Core.Models
 
         async Task<object> IAsyncCloneable<Program>.CloneInstance(Program program)
         {
-            var result = new Sound(Name);
+            var result = new Sound(Name, _fileName);
             var directory = program.BasePath + "/" + StorageConstants.ProgramSoundsPath + "/";
             using (var storage = StorageSystem.GetStorage())
             {
